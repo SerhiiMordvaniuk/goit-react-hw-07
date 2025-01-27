@@ -1,0 +1,35 @@
+.item {
+  padding: 10px 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn {
+  background-color: rgb(232, 232, 232);
+  border: 1px solid black;
+  border-radius: 4px;
+  color: black;
+  width: 80px;
+  height: 40px;
+  transition: all 250ms;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
