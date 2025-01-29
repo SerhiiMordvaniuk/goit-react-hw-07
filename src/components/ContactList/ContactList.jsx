@@ -13,9 +13,6 @@ const ContactList = () => {
 
   const error = useSelector(selectError);
   const loading = useSelector(selectLoading);
-  if (contactList.length === 0) {
-    return <p>No contacts</p>;
-  }
 
   return (
     <>
