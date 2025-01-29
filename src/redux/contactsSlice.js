@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchContacts } from "./contactsOps";
+import { addContact, deleteContact, fetchContacts } from "./contactsOps";
 
 const initialState = {
   items: [],
@@ -10,14 +10,6 @@ const initialState = {
 const contactSlice = createSlice({
   name: "contacts",
   initialState,
-  reducers: {
-    deleteContact: (state, action) => {
-      state.items = state.items.filter((item) => item.id !== action.payload);
-    },
-    addContact: (state, action) => {
-      state.items.push(action.payload);
-    },
-  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchContacts.pending, (state, action) => {
@@ -30,12 +22,36 @@ const contactSlice = createSlice({
       .addCase(fetchContacts.rejected, (state, action) => {
         state.error = true;
         state.loading = false;
+      })
+      .addCase(addContact.pending, (state, action) => {
+        state.error = false;
+        state.loading = true;
+      })
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload;
+      })
+      .addCase(addContact.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+      })
+      // .addCase(deleteContact.pending, (state, action) => {
+      //   state.error = false;
+      //   state.loading = true;
+      // })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.items = state.items.filter(
+          (item) => item.id !== action.payload.id
+        );
       });
+    // .addCase(deleteContact.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.error = true;
+    // });
   },
 });
 
 export const contactsListReducer = contactSlice.reducer;
-export const { deleteContact, addContact } = contactSlice.actions;
 export const selectContacts = (state) => state.contacts.items;
 export const selectLoading = (state) => state.contacts.loading;
 export const selectError = (state) => state.contacts.error;
